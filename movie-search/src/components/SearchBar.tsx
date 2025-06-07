@@ -1,7 +1,19 @@
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { changeSearch } from "../redux/slices/searchSlice";
+import type { RootState } from "../redux/store";
+
 export const SearchBar = () => {
+  const search = useAppSelector((state: RootState) => state.search.search);
+  const dispatch = useAppDispatch();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeSearch(e.target.value));
+  };
   return (
     <div className="flex flex-col gap-2 mt-10">
       <input
+        value={search}
+        onChange={handleInputChange}
         className="outline-none shadow p-3"
         placeholder="Search Movie..."
         name="movie"
