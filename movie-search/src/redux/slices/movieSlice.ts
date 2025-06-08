@@ -47,6 +47,10 @@ export const fetchMovie = createAsyncThunk(
   "fetch/movie",
   async (searchText: string) => {
     const res = await axiosInstance(`/?t=${searchText}`);
+
+    if (res.data.Error) {
+      throw new Error(res.data.Error);
+    }
     return res.data;
   }
 );
