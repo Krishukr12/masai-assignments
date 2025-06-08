@@ -1,72 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "./config/axios";
-
-export interface Character {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: LocationInfo;
-  location: LocationInfo;
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-}
-
-export interface LocationInfo {
-  name: string;
-  url: string;
-}
+import { Todos } from "./components/Todos";
+import type { Todo } from "./types/todos.type";
+import { Pagination } from "./components/Pagination";
 
 export const App = () => {
-  const [data, setData] = useState<Character[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const itemsPerPage = 10;
-  const currentPage = useRef<number>(0);
-
-  const getCharacters = async () => {
-    const res = await axiosInstance.get("/");
-    setData(res.data.results);
-  };
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    getCharacters();
+    const getTodos = async () => {
+      const res = await axiosInstance.get<Todo[]>("/todos");
+      setTodos(res.data);
+    };
+
+    getTodos();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPage(Number(e.target.value));
-    currentPage.current = parseInt(e.target.value);
-  };
-
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const currentPageData = data.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
   return (
-    <main className="h-screen border border-red-600 flex justify-center items-center">
-      <section>
-        <section>
-          <ol>
-            {currentPageData.map((item) => (
-              <li key={item.id}>{item.name}</li>
-            ))}
-          </ol>
-        </section>
-        <section>
-          <select value={page} onChange={handleChange}>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <option key={index} value={index + 1}>
-                Page {index + 1}
-              </option>
-            ))}
-          </select>
-        </section>
+    <main className="h-screen border border-red-300">
+      <section className="flex justify-center border border-red-400">
+        <Todos todos={todos} />
+      </section>
+      <section className="flex justify-center">
+        <Pagination possiblePage={10} />
       </section>
     </main>
   );
