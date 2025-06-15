@@ -1,0 +1,11 @@
+{
+    "name": "terminal-task-manager",
+    "version": "1.0.0",
+    "main": "cli.js",
+    "type": "module",
+    "dependencies": {
+      "inquirer": "^9.0.0",
+      "chalk": "^5.0.0"
+    }
+  }
+  
