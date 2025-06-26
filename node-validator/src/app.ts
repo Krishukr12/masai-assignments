@@ -12,7 +12,7 @@ const PORT = process.env.PORT ?? 8000;
 const JWT_SECRET = process.env.JWT_SECRET || "jwt_secret";
 
 app.get("/login", (req: Request, res: Response) => {
-  const user = { id: 1, username: "john_doe" };
+  const user = { id: 1, username: "Krishan Kumar Safi" };
   const token = jwt.sign(user, JWT_SECRET, { expiresIn: "1h" });
   res.json({ token });
 });
