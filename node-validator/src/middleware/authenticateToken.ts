@@ -12,10 +12,14 @@ export const authenticateToken = (
   const authHeader = req.headers["authorization"];
   const token = authHeader?.split(" ")[1];
 
-  if (!token) return res.status(401).json({ message: "No token provided" });
+  if (!token) {
+    res.status(401).json({ message: "No token provided" });
+    return;
+  }
 
   if (blacklistedTokens.has(token)) {
-    return res.status(403).json({ message: "Token is blacklisted" });
+    res.status(403).json({ message: "Token is blacklisted" });
+    return;
   }
 
   jwt.verify(token, JWT_SECRET, (err, user) => {

@@ -1,1 +1,1 @@
-{"root":["./src/app.ts","./src/middleware/authenticatetokent.ts"],"errors":true,"version":"5.8.3"}
+{"root":["./src/app.ts","./src/const/blacklistedtoken.ts","./src/middleware/authenticatetoken.ts"],"version":"5.8.3"}
